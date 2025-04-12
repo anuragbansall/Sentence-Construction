@@ -52,8 +52,10 @@ function App() {
           question={questions[currentQuestionIndex]}
           onNextQuestion={handleNextQuestion}
           timeLeft={timeLeft}
+          questions={questions}
         >
           <FillInTheBlanks.Header />
+          <FillInTheBlanks.ProgressBar />
           <FillInTheBlanks.Instruction />
           <FillInTheBlanks.Sentence />
           <FillInTheBlanks.Options />

@@ -13,7 +13,13 @@ import Button from "./Button";
 const FillInTheBlanksContext = createContext();
 
 // Main FillInTheBlanks Component
-function FillInTheBlanks({ question, onNextQuestion, timeLeft, children }) {
+function FillInTheBlanks({
+  question,
+  onNextQuestion,
+  timeLeft,
+  children,
+  questions,
+}) {
   const [selectedOptions, setSelectedOptions] = useState(
     question.options.map(() => null)
   );
@@ -52,6 +58,7 @@ function FillInTheBlanks({ question, onNextQuestion, timeLeft, children }) {
       handleOptionRemove,
       onNextQuestion,
       timeLeft,
+      questions,
     }),
     [
       question,
@@ -60,6 +67,7 @@ function FillInTheBlanks({ question, onNextQuestion, timeLeft, children }) {
       handleOptionClick,
       handleOptionRemove,
       onNextQuestion,
+      questions,
     ]
   );
 
@@ -85,6 +93,29 @@ const Header = () => {
       >
         Quit
       </Button>
+    </div>
+  );
+};
+
+const ProgressBar = () => {
+  const { questions, question } = useContext(FillInTheBlanksContext);
+  const [answeredLines, setAnsweredLines] = useState(0);
+  const currentQuestionIndex = questions.indexOf(question) + 1;
+
+  useEffect(() => {
+    setAnsweredLines(currentQuestionIndex);
+  }, [currentQuestionIndex]);
+
+  return (
+    <div className="flex items-center justify-center gap-2 my-4">
+      {questions.map((_, index) => (
+        <div
+          key={index}
+          className={`h-1 w-full rounded-full ${
+            index < answeredLines ? "bg-orange-300" : "bg-gray-300"
+          }`}
+        ></div>
+      ))}
     </div>
   );
 };
@@ -168,6 +199,7 @@ const Submit = () => {
 };
 // Export FillInTheBlanks and all its child components
 FillInTheBlanks.Header = Header;
+FillInTheBlanks.ProgressBar = ProgressBar;
 FillInTheBlanks.Instruction = Instruction;
 FillInTheBlanks.Sentence = Sentence;
 FillInTheBlanks.Options = Options;

@@ -71,7 +71,7 @@ function FillInTheBlanks({
 
   return (
     <FillInTheBlanksContext.Provider value={contextValue}>
-      <div className="bg-white p-8 rounded-lg shadow-md w-3/4 max-w-2xl">
+      <div className="bg-white p-4 sm:p-8 rounded-lg shadow-md w-full max-w-2xl">
         {children}
       </div>
     </FillInTheBlanksContext.Provider>

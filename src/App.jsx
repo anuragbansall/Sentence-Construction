@@ -19,10 +19,6 @@ function App() {
     setScore,
   } = useContext(QuizContext);
 
-  if (isQuizFinished) {
-    return <ResultPage />;
-  }
-
   if (error) {
     return (
       <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
@@ -31,6 +27,10 @@ function App() {
         </div>
       </div>
     );
+  }
+
+  if (isQuizFinished) {
+    return <ResultPage />;
   }
 
   return (

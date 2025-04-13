@@ -9,7 +9,7 @@ function Sentence() {
 
   return (
     <div className="mt-6 px-4">
-      <p className="text-xl font-medium text-zinc-600 text-center leading-[3]">
+      <p className="text-2xl font-medium text-zinc-600 text-justify leading-[2] sm:leading-[3]">
         {question.question.split("_____________").map((part, index) => (
           <span key={index} className="inline">
             <span>{part}</span>

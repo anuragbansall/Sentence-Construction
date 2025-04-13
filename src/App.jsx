@@ -3,6 +3,8 @@ import FillInTheBlanks from "./components/FillInTheBlanks";
 import handleNextQuestion from "./utils/handleNextQuestion";
 import handleFetchQuestions from "./utils/handleFetchQuestions";
 import Loading from "./components/Loading";
+import Result from "./components/Result";
+import ResultPage from "./pages/ResultPage";
 
 function App() {
   const initialTime = useRef(30);
@@ -59,13 +61,7 @@ function App() {
 
   // Temporary quiz finished state for testing
   if (isQuizFinished) {
-    return (
-      <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
-        <div className="text-center text-xl font-bold text-gray-700">
-          Quiz Finished! Thank you for participating.
-        </div>
-      </div>
-    );
+    return <ResultPage />;
   }
 
   // Temporary error handling for testing

@@ -22,24 +22,23 @@ function FillInTheBlanks({
   questions,
 }) {
   const [selectedOptions, setSelectedOptions] = useState(
-    question.options.map(() => null)
+    question.options.map(() => null) || []
   );
 
   useEffect(() => {
-    setSelectedOptions(question.options.map(() => null));
+    setSelectedOptions(question.options.map(() => null) || []);
   }, [question]);
 
-  const handleOptionClick = useCallback(
-    (option) => {
-      const newSelectedOptions = [...selectedOptions];
+  const handleOptionClick = useCallback((option) => {
+    setSelectedOptions((prevSelectedOptions) => {
+      const newSelectedOptions = [...prevSelectedOptions];
       const emptyIndex = newSelectedOptions.indexOf(null);
       if (emptyIndex !== -1) {
         newSelectedOptions[emptyIndex] = option;
-        setSelectedOptions(newSelectedOptions);
       }
-    },
-    [selectedOptions]
-  );
+      return newSelectedOptions;
+    });
+  }, []);
 
   const handleOptionRemove = useCallback(
     (option) => {

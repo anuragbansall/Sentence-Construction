@@ -20,14 +20,12 @@ function FillInTheBlanks({
   timeLeft,
   children,
   questions,
+  selectedOptions,
+  setSelectedOptions,
 }) {
-  const [selectedOptions, setSelectedOptions] = useState(
-    question.options.map(() => null) || []
-  );
-
   useEffect(() => {
     setSelectedOptions(question.options.map(() => null) || []);
-  }, [question]);
+  }, [question, setSelectedOptions]);
 
   const handleOptionClick = useCallback((option) => {
     setSelectedOptions((prevSelectedOptions) => {

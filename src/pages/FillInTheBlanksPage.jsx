@@ -7,6 +7,8 @@ function FillInTheBlanksPage({
   currentQuestionIndex,
   onNext,
   timeLeft,
+  selectedOptions,
+  setSelectedOptions,
 }) {
   return (
     <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
@@ -16,6 +18,8 @@ function FillInTheBlanksPage({
           onNextQuestion={onNext}
           timeLeft={timeLeft}
           questions={questions}
+          selectedOptions={selectedOptions}
+          setSelectedOptions={setSelectedOptions}
         >
           <FillInTheBlanks.Header />
           <FillInTheBlanks.ProgressBar />

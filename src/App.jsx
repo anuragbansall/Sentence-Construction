@@ -14,8 +14,10 @@ function App() {
   const [timeLeft, setTimeLeft] = useState(initialTime.current);
   const [error, setError] = useState(null);
   const [isQuizFinished, setIsQuizFinished] = useState(false);
+  const [selectedOptions, setSelectedOptions] = useState([]);
 
   const onNext = useCallback(() => {
+    console.log("selectedOptions", selectedOptions);
     const isFinished = handleNextQuestion(
       currentQuestionIndex,
       setCurrentQuestionIndex,
@@ -25,7 +27,13 @@ function App() {
     if (isFinished) {
       setIsQuizFinished(true);
     }
-  }, [currentQuestionIndex, questions, setCurrentQuestionIndex]);
+  }, [
+    currentQuestionIndex,
+    questions,
+    setCurrentQuestionIndex,
+    setIsQuizFinished,
+    selectedOptions,
+  ]);
 
   const onFetchQuestions = useCallback(async () => {
     try {
@@ -82,6 +90,8 @@ function App() {
       currentQuestionIndex={currentQuestionIndex}
       onNext={onNext}
       timeLeft={timeLeft}
+      selectedOptions={selectedOptions}
+      setSelectedOptions={setSelectedOptions}
     />
   );
 }

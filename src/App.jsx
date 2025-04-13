@@ -20,14 +20,7 @@ function App() {
   } = useContext(QuizContext);
 
   if (isQuizFinished) {
-    return (
-      <ResultPage
-        results={results}
-        setResults={setResults}
-        score={score}
-        setScore={setScore}
-      />
-    );
+    return <ResultPage />;
   }
 
   if (error) {

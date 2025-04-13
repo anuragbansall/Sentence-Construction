@@ -1,20 +1,14 @@
-import React, { createContext } from "react";
+import React, { useContext } from "react";
+import { QuizContext } from "../../context/QuizProvider";
 
-const ResultContext = createContext();
-
-function Result({ results, setResults, score, setScore, children }) {
-  return (
-    <ResultContext.Provider value={{ results, setResults, score, setScore }}>
-      <div className="mx-auto p-8 w-full flex flex-col items-center gap-8">
-        {children}
-      </div>
-    </ResultContext.Provider>
-  );
-}
+const Result = ({ children }) => (
+  <div className="mx-auto p-8 w-full flex flex-col items-center gap-8">
+    {children}
+  </div>
+);
 
 function Score() {
-  const { score } = React.useContext(ResultContext);
-
+  const { score } = useContext(QuizContext);
   return (
     <div className="flex flex-col items-center justify-center">
       <h1 className="text-6xl font-bold text-green-800">{score}</h1>
@@ -32,7 +26,7 @@ function PromptResponse({ prompt, response, index, total, isCorrect }) {
     : "text-red-700 bg-red-50";
 
   return (
-    <div className="max-w-2xl w-full rounded-xl shadow-xl shadow-[#d4d4d450] overflow-hidden my-12">
+    <div className="max-w-2xl w-full rounded-xl shadow-xl overflow-hidden my-12">
       <div className="bg-white p-6">
         <div className="flex items-center justify-between mb-4">
           <span className="text-sm text-zinc-500 bg-zinc-200 font-semibold p-1 rounded-sm">
@@ -62,8 +56,7 @@ function PromptResponse({ prompt, response, index, total, isCorrect }) {
 }
 
 function List() {
-  const { results } = React.useContext(ResultContext);
-
+  const { results } = useContext(QuizContext);
   return (
     <div className="w-full flex flex-col items-center">
       {results.map((item, index) => (
@@ -84,5 +77,4 @@ Result.Score = Score;
 Result.PromptResponse = PromptResponse;
 Result.List = List;
 
-export { ResultContext };
 export default Result;

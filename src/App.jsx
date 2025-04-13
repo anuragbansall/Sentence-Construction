@@ -47,7 +47,7 @@ function App() {
 
   return (
     <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
-      {questions.length > 0 && (
+      {questions.length > 0 ? (
         <FillInTheBlanks
           question={questions[currentQuestionIndex]}
           onNextQuestion={handleNextQuestion}
@@ -61,6 +61,8 @@ function App() {
           <FillInTheBlanks.Options />
           <FillInTheBlanks.Submit />
         </FillInTheBlanks>
+      ) : (
+        <div className="text-center text-gray-500">Loading questions...</div>
       )}
     </div>
   );

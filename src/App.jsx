@@ -1,37 +1,49 @@
 import React, { useCallback, useEffect, useRef, useState } from "react";
 import FillInTheBlanks from "./components/FillInTheBlanks";
+import handleNextQuestion from "./utils/handleNextQuestion";
+import handleFetchQuestions from "./utils/handleFetchQuestions";
+import Loading from "./components/Loading";
 
 function App() {
   const initialTime = useRef(30);
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(initialTime.current);
+  const [error, setError] = useState(null);
+  const [isQuizFinished, setIsQuizFinished] = useState(false);
 
-  const handleNextQuestion = useCallback(() => {
-    if (currentQuestionIndex < questions.length - 1) {
-      setCurrentQuestionIndex(currentQuestionIndex + 1);
+  const onNext = useCallback(() => {
+    const isFinished = handleNextQuestion(
+      currentQuestionIndex,
+      setCurrentQuestionIndex,
+      questions
+    );
+
+    if (isFinished) {
+      setIsQuizFinished(true);
     }
-  }, [currentQuestionIndex, questions.length]);
+  }, [currentQuestionIndex, questions, setCurrentQuestionIndex]);
 
-  const handleFetchQuestions = useCallback(async () => {
+  const onFetchQuestions = useCallback(async () => {
     try {
-      const response = await fetch("http://localhost:3001/data");
-      const data = await response.json();
-      setQuestions(data.questions);
+      await handleFetchQuestions(setQuestions);
+      setError(null);
     } catch (error) {
-      console.error("Error fetching questions:", error);
+      setError(error.message);
     }
   }, []);
 
   useEffect(() => {
-    handleFetchQuestions();
-  }, [handleFetchQuestions]);
+    onFetchQuestions();
+  }, [onFetchQuestions]);
 
   useEffect(() => {
+    if (isQuizFinished) return;
+
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
         if (prev <= 1) {
-          handleNextQuestion();
+          onNext();
           return initialTime.current;
         }
         return prev - 1;
@@ -39,18 +51,40 @@ function App() {
     }, 1000);
 
     return () => clearInterval(timer);
-  }, [handleNextQuestion]);
+  }, [onNext, isQuizFinished]);
 
   useEffect(() => {
     setTimeLeft(initialTime.current);
   }, [currentQuestionIndex]);
+
+  // Temporary quiz finished state for testing
+  if (isQuizFinished) {
+    return (
+      <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
+        <div className="text-center text-xl font-bold text-gray-700">
+          Quiz Finished! Thank you for participating.
+        </div>
+      </div>
+    );
+  }
+
+  // Temporary error handling for testing
+  if (error) {
+    return (
+      <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
+        <div className="text-center text-red-500 font-bold">
+          {error} Please try again later.
+        </div>
+      </div>
+    );
+  }
 
   return (
     <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
       {questions.length > 0 ? (
         <FillInTheBlanks
           question={questions[currentQuestionIndex]}
-          onNextQuestion={handleNextQuestion}
+          onNextQuestion={onNext}
           timeLeft={timeLeft}
           questions={questions}
         >
@@ -62,7 +96,10 @@ function App() {
           <FillInTheBlanks.Submit />
         </FillInTheBlanks>
       ) : (
-        <div className="text-center text-gray-500">Loading questions...</div>
+        <div className="flex items-center justify-center gap-2 text-gray-500">
+          <Loading />
+          Loading questions...
+        </div>
       )}
     </div>
   );

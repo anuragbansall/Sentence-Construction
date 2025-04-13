@@ -11,7 +11,7 @@ import handleFetchQuestions from "../utils/handleFetchQuestions";
 export const QuizContext = createContext();
 
 const QuizProvider = ({ children }) => {
-  const initialTime = useRef(30);
+  const initialTime = useRef(3);
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(initialTime.current);
@@ -20,13 +20,20 @@ const QuizProvider = ({ children }) => {
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [results, setResults] = useState([]);
   const [score, setScore] = useState(0);
+  const isNextCalled = useRef(false);
 
   const formatSentence = (sentence, answers) => {
     let i = 0;
-    return sentence.replace(/_____________/g, () => answers[i++]);
+    return sentence
+      .replace(/_____________/g, () => answers[i++])
+      .replaceAll("null", "no answer");
   };
 
   const onNext = useCallback(() => {
+    if (isNextCalled.current) return;
+
+    isNextCalled.current = true;
+
     const isFinished = handleNextQuestion(
       currentQuestionIndex,
       setCurrentQuestionIndex,
@@ -85,7 +92,7 @@ const QuizProvider = ({ children }) => {
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
-        if (prev <= 1) {
+        if (prev <= 1 && !isNextCalled.current) {
           onNext();
           return initialTime.current;
         }
@@ -93,11 +100,15 @@ const QuizProvider = ({ children }) => {
       });
     }, 1000);
 
-    return () => clearInterval(timer);
+    return () => {
+      clearInterval(timer);
+      isNextCalled.current = false;
+    };
   }, [onNext, isQuizFinished]);
 
   useEffect(() => {
     setTimeLeft(initialTime.current);
+    isNextCalled.current = false;
   }, [currentQuestionIndex]);
 
   return (

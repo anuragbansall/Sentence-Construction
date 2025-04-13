@@ -5,9 +5,7 @@ import App from "./App.jsx";
 import QuizProvider from "./context/QuizProvider.jsx";
 
 createRoot(document.getElementById("root")).render(
-  <StrictMode>
-    <QuizProvider>
-      <App />
-    </QuizProvider>
-  </StrictMode>
+  <QuizProvider>
+    <App />
+  </QuizProvider>
 );

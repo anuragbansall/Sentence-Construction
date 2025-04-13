@@ -2,27 +2,7 @@ import React, { createContext } from "react";
 
 const ResultContext = createContext();
 
-function Result({ children }) {
-  const [results, setResults] = React.useState([
-    {
-      prompt: "Brown fox jumps over the lazy dog",
-      response: "Brown jumps over the fox lazy dog",
-      isCorrect: true,
-    },
-    {
-      prompt: "Brown fox jumps over the lazy dog",
-      response: "Brown jumps over the fox lazy dog",
-      isCorrect: false,
-    },
-    {
-      prompt: "Brown fox jumps over the lazy dog",
-      response: "Brown jumps over the fox lazy dog",
-      isCorrect: true,
-    },
-  ]);
-
-  const [score, setScore] = React.useState(91);
-
+function Result({ results, setResults, score, setScore, children }) {
   return (
     <ResultContext.Provider value={{ results, setResults, score, setScore }}>
       <div className="mx-auto p-8 w-full flex flex-col items-center gap-8">

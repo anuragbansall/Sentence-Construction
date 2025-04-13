@@ -15,24 +15,73 @@ function App() {
   const [error, setError] = useState(null);
   const [isQuizFinished, setIsQuizFinished] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
+  const [results, setResults] = useState([]);
+  const [score, setScore] = useState(0);
 
   const onNext = useCallback(() => {
-    console.log("selectedOptions", selectedOptions);
     const isFinished = handleNextQuestion(
       currentQuestionIndex,
       setCurrentQuestionIndex,
       questions
     );
 
-    if (isFinished) {
-      setIsQuizFinished(true);
-    }
+    const currentQuestion = questions[currentQuestionIndex];
+    const correctAnswers = currentQuestion.correctAnswer;
+    const selectedAnswer = selectedOptions;
+
+    // Replace all blanks one by one for prompt and response formatting
+    const formatSentence = (sentence, answers) => {
+      let i = 0;
+      return sentence.replace(/_____________/g, () => answers[i++]);
+    };
+
+    const formattedPrompt = formatSentence(
+      currentQuestion.question,
+      correctAnswers
+    );
+    const formattedResponse = formatSentence(
+      currentQuestion.question,
+      selectedAnswer
+    );
+
+    const isCorrect = correctAnswers.every(
+      (answer, idx) => selectedAnswer[idx] === answer
+    );
+
+    const newResult = {
+      prompt: formattedPrompt,
+      response: formattedResponse,
+      isCorrect: isCorrect,
+    };
+
+    // Update results first, then calculate score if quiz is finished
+    setResults((prevResults) => {
+      const updatedResults = [...prevResults, newResult];
+
+      if (isFinished) {
+        const correctCount = updatedResults.filter(
+          (res) => res.isCorrect
+        ).length;
+        const calculatedScore = Math.round(
+          (correctCount / updatedResults.length) * 100
+        );
+        setScore(calculatedScore);
+        setIsQuizFinished(true);
+        console.log("Final Score:", calculatedScore);
+      }
+
+      return updatedResults;
+    });
+
+    setSelectedOptions([]);
   }, [
     currentQuestionIndex,
     questions,
+    selectedOptions,
     setCurrentQuestionIndex,
     setIsQuizFinished,
-    selectedOptions,
+    setResults,
+    setScore,
   ]);
 
   const onFetchQuestions = useCallback(async () => {
@@ -70,7 +119,14 @@ function App() {
 
   // Temporary quiz finished state for testing
   if (isQuizFinished) {
-    return <ResultPage />;
+    return (
+      <ResultPage
+        results={results}
+        setResults={setResults}
+        score={score}
+        setScore={setScore}
+      />
+    );
   }
 
   // Temporary error handling for testing

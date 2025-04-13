@@ -8,27 +8,27 @@ function Sentence() {
   );
 
   return (
-    <div className="mt-8">
-      <p className="text-xl font-medium text-center text-zinc-600 leading-[3] flex flex-wrap gap-2">
+    <div className="mt-6 px-4">
+      <p className="text-xl font-medium text-zinc-600 text-center leading-[3]">
         {question.question.split("_____________").map((part, index) => (
-          <React.Fragment key={index}>
-            <span>{part.trim()}</span>
+          <span key={index} className="inline">
+            <span>{part}</span>
             {index < selectedOptions.length && (
-              <span className="font-semibold border-b-2 border-zinc-300 flex items-center justify-center w-[8rem]">
+              <span className="inline-block align-middle mx-1">
                 {selectedOptions[index] ? (
                   <Button
-                    className="text-sm"
+                    className="text-sm px-2 py-1 bg-zinc-200 hover:bg-zinc-300 rounded-md transition"
                     onClick={() => handleOptionRemove(selectedOptions[index])}
                     title="Remove option"
                   >
                     {selectedOptions[index]}
                   </Button>
                 ) : (
-                  <span className="w-full h-6 inline-block bg-zinc-100 rounded-md"></span>
+                  <span className="inline-block w-[6rem] h-6 bg-zinc-100 rounded-md"></span>
                 )}
               </span>
             )}
-          </React.Fragment>
+          </span>
         ))}
       </p>
     </div>

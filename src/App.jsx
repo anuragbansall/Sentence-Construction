@@ -5,6 +5,7 @@ import handleFetchQuestions from "./utils/handleFetchQuestions";
 import Loading from "./components/Loading";
 import Result from "./components/Result";
 import ResultPage from "./pages/ResultPage";
+import FillInTheBlanksPage from "./pages/FillInTheBlanksPage";
 
 function App() {
   const initialTime = useRef(30);
@@ -76,28 +77,12 @@ function App() {
   }
 
   return (
-    <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
-      {questions.length > 0 ? (
-        <FillInTheBlanks
-          question={questions[currentQuestionIndex]}
-          onNextQuestion={onNext}
-          timeLeft={timeLeft}
-          questions={questions}
-        >
-          <FillInTheBlanks.Header />
-          <FillInTheBlanks.ProgressBar />
-          <FillInTheBlanks.Instruction />
-          <FillInTheBlanks.Sentence />
-          <FillInTheBlanks.Options />
-          <FillInTheBlanks.Submit />
-        </FillInTheBlanks>
-      ) : (
-        <div className="flex items-center justify-center gap-2 text-gray-500">
-          <Loading />
-          Loading questions...
-        </div>
-      )}
-    </div>
+    <FillInTheBlanksPage
+      questions={questions}
+      currentQuestionIndex={currentQuestionIndex}
+      onNext={onNext}
+      timeLeft={timeLeft}
+    />
   );
 }
 

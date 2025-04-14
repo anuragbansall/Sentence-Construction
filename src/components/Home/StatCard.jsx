@@ -1,7 +1,7 @@
 function StatCard({ label, value, bordered }) {
   return (
     <div
-      className={`w-full px-12 ${
+      className={`w-full px-8 ${
         bordered ? "sm:border-r-2 border-zinc-300" : ""
       }`}
     >

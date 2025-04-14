@@ -11,7 +11,7 @@ import handleFetchQuestions from "../utils/handleFetchQuestions";
 export const QuizContext = createContext();
 
 const QuizProvider = ({ children }) => {
-  const initialTime = useRef(3);
+  const initialTime = useRef(30);
 
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);

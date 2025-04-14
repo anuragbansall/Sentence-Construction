@@ -2,6 +2,7 @@ import React, { useContext } from "react";
 import ResultPage from "./pages/ResultPage";
 import FillInTheBlanksPage from "./pages/FillInTheBlanksPage";
 import { QuizContext } from "./context/QuizProvider";
+import HomePage from "./pages/HomePage";
 
 function App() {
   const {
@@ -27,6 +28,10 @@ function App() {
         </div>
       </div>
     );
+  }
+
+  if (true) {
+    return <HomePage />; // temporary fix to show the home page
   }
 
   if (isQuizFinished) {

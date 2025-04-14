@@ -126,6 +126,7 @@ const QuizProvider = ({ children }) => {
         error,
         setResults,
         setScore,
+        initialTime: initialTime.current,
       }}
     >
       {children}

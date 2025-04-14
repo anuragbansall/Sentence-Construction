@@ -12,14 +12,17 @@ export const QuizContext = createContext();
 
 const QuizProvider = ({ children }) => {
   const initialTime = useRef(3);
+
   const [questions, setQuestions] = useState([]);
   const [currentQuestionIndex, setCurrentQuestionIndex] = useState(0);
   const [timeLeft, setTimeLeft] = useState(initialTime.current);
   const [error, setError] = useState(null);
+  const [isQuizStarted, setIsQuizStarted] = useState(false);
   const [isQuizFinished, setIsQuizFinished] = useState(false);
   const [selectedOptions, setSelectedOptions] = useState([]);
   const [results, setResults] = useState([]);
   const [score, setScore] = useState(0);
+
   const isNextCalled = useRef(false);
 
   const formatSentence = (sentence, answers) => {
@@ -31,7 +34,6 @@ const QuizProvider = ({ children }) => {
 
   const onNext = useCallback(() => {
     if (isNextCalled.current) return;
-
     isNextCalled.current = true;
 
     const isFinished = handleNextQuestion(
@@ -83,12 +85,14 @@ const QuizProvider = ({ children }) => {
     }
   }, []);
 
+  // Fetch quiz questions on mount
   useEffect(() => {
     onFetchQuestions();
   }, [onFetchQuestions]);
 
+  // Timer logic, only runs if quiz is started and not finished
   useEffect(() => {
-    if (isQuizFinished) return;
+    if (!isQuizStarted || isQuizFinished) return;
 
     const timer = setInterval(() => {
       setTimeLeft((prev) => {
@@ -104,8 +108,9 @@ const QuizProvider = ({ children }) => {
       clearInterval(timer);
       isNextCalled.current = false;
     };
-  }, [onNext, isQuizFinished]);
+  }, [onNext, isQuizStarted, isQuizFinished]);
 
+  // Reset time for each new question
   useEffect(() => {
     setTimeLeft(initialTime.current);
     isNextCalled.current = false;
@@ -122,6 +127,8 @@ const QuizProvider = ({ children }) => {
         setSelectedOptions,
         results,
         score,
+        isQuizStarted,
+        setIsQuizStarted,
         isQuizFinished,
         error,
         setResults,

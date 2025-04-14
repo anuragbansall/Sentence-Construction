@@ -1,52 +1,16 @@
-import React, { useContext } from "react";
-import ResultPage from "./pages/ResultPage";
-import FillInTheBlanksPage from "./pages/FillInTheBlanksPage";
-import { QuizContext } from "./context/QuizProvider";
+import React from "react";
+import { Routes, Route } from "react-router-dom";
 import HomePage from "./pages/HomePage";
+import FillInTheBlanksPage from "./pages/FillInTheBlanksPage";
+import ResultPage from "./pages/ResultPage";
 
 function App() {
-  const {
-    questions,
-    currentQuestionIndex,
-    onNext,
-    timeLeft,
-    selectedOptions,
-    setSelectedOptions,
-    isQuizFinished,
-    error,
-    results,
-    setResults,
-    score,
-    setScore,
-  } = useContext(QuizContext);
-
-  if (error) {
-    return (
-      <div className="min-h-screen w-full bg-[#F8F8F8] flex items-center justify-center">
-        <div className="text-center text-red-500 font-bold">
-          {error} Please try again later.
-        </div>
-      </div>
-    );
-  }
-
-  if (true) {
-    return <HomePage />; // temporary fix to show the home page
-  }
-
-  if (isQuizFinished) {
-    return <ResultPage />;
-  }
-
   return (
-    <FillInTheBlanksPage
-      questions={questions}
-      currentQuestionIndex={currentQuestionIndex}
-      onNext={onNext}
-      timeLeft={timeLeft}
-      selectedOptions={selectedOptions}
-      setSelectedOptions={setSelectedOptions}
-    />
+    <Routes>
+      <Route path="/" element={<HomePage />} />
+      <Route path="/quiz" element={<FillInTheBlanksPage />} />
+      <Route path="/result" element={<ResultPage />} />
+    </Routes>
   );
 }
 

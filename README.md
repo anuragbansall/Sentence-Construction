@@ -20,3 +20,22 @@ An interactive React-based quiz tool to practice sentence construction by fillin
 - ⚛️ React + Vite
 - 💨 Tailwind CSS
 - 🌐 JSON Server (mock backend)
+
+## 🔗 Live Links
+
+- 🔥 **Frontend**: [https://sentence-construction-online.vercel.app/](https://sentence-construction-online.vercel.app/)
+- 🔌 **JSON Server**: [https://json-server-api-1-g4z8.onrender.com/data](https://https://json-server-api-1-g4z8.onrender.com/data)
+- 📁 **GitHub**: [https://github.com/anuragbansall/Sentence-Construction](https://https://github.com/anuragbansall/Sentence-Construction)
+
+## ⚙️ How to Run Locally
+
+```bash
+# Install dependencies
+npm install
+
+# Start frontend
+npm run dev
+
+# In a separate terminal (for JSON server)
+npx json-server --watch db/sample.json --port 10000
+```

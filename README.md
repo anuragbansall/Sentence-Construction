@@ -24,7 +24,7 @@ An interactive React-based quiz tool to practice sentence construction by fillin
 ## 🔗 Live Links
 
 - 🔥 **Frontend**: [https://sentence-construction-online.vercel.app/](https://sentence-construction-online.vercel.app/)
-- 🔌 **JSON Server**: [https://json-server-api-1-g4z8.onrender.com/data](https://https://json-server-api-1-g4z8.onrender.com/data)
+- 🔌 **JSON Server**: [https://json-server-api-1-g4z8.onrender.com/](https://json-server-api-1-g4z8.onrender.com/)
 - 📁 **GitHub**: [https://github.com/anuragbansall/Sentence-Construction](https://https://github.com/anuragbansall/Sentence-Construction)
 
 ## ⚙️ How to Run Locally

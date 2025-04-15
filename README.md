@@ -1,4 +1,4 @@
-# 🧠 Sentence Construction Tool - CA MONK Frontend Internship Assignment
+# 🧠 Sentence Construction Tool
 
 An interactive React-based quiz tool to practice sentence construction by filling in blanks with correct words. Designed with a 30-second timer, instant feedback, and result tracking.
 

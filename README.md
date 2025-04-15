@@ -1,4 +1,4 @@
-# 🧠 Sentence Construction Tool - CA MONK Frontend Internship Assignment
+# 🧠 Sentence Construction Tool
 
 An interactive React-based quiz tool to practice sentence construction by filling in blanks with correct words. Designed with a 30-second timer, instant feedback, and result tracking.
 
@@ -24,7 +24,7 @@ An interactive React-based quiz tool to practice sentence construction by fillin
 ## 🔗 Live Links
 
 - 🔥 **Frontend**: [https://sentence-construction-online.vercel.app/](https://sentence-construction-online.vercel.app/)
-- 🔌 **JSON Server**: [https://json-server-api-1-g4z8.onrender.com/data](https://https://json-server-api-1-g4z8.onrender.com/data)
+- 🔌 **JSON Server**: [https://json-server-api-1-g4z8.onrender.com/](https://json-server-api-1-g4z8.onrender.com/data)
 - 📁 **GitHub**: [https://github.com/anuragbansall/Sentence-Construction](https://https://github.com/anuragbansall/Sentence-Construction)
 
 ## ⚙️ How to Run Locally
